@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.riggle.netset.R
 
+//
+// This fragment show list of network interfaces
+//
 class MainFragment : Fragment() {
 
     companion object {
@@ -27,6 +30,10 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         return inflater.inflate(R.layout.fragment_main, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
     }
 
 }
