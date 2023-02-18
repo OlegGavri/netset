@@ -1,9 +1,12 @@
 package com.riggle.netset.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.riggle.netset.R
@@ -13,7 +16,8 @@ import com.riggle.netset.viewmodel.NetworkListFragmentViewModel
 
 class NetworkListAdapter(
     private val navController: NavController,
-    private val viewModel: NetworkListFragmentViewModel
+    private val viewModel: NetworkListFragmentViewModel,
+    private val lifecycleOwner : LifecycleOwner
     ) :
     RecyclerView.Adapter<NetworkListAdapter.ViewHolder>() {
 
@@ -39,6 +43,12 @@ class NetworkListAdapter(
                     )
                 }
             }
+        }
+    }
+
+    init {
+        viewModel.networkList.observe(lifecycleOwner) {
+            notifyDataSetChanged()
         }
     }
 

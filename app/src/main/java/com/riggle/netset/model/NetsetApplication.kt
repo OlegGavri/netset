@@ -7,16 +7,11 @@ class NetsetApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        instance = this
+        Nets.createInstance(this)
     }
 
     val connectivityManager : ConnectivityManager
         get() {
             return getSystemService(ConnectivityManager::class.java)
         }
-
-    companion object{
-        var instance : NetsetApplication? = null
-        private set
-    }
 }

@@ -7,21 +7,22 @@ import com.riggle.netset.model.NetInfo
 import com.riggle.netset.model.Nets
 
 class NetworkListFragmentViewModel : ViewModel() {
-    private val networkList : MutableLiveData<List<NetInfo>> by lazy {
+    val networkList : MutableLiveData<List<NetInfo>> by lazy {
         MutableLiveData<List<NetInfo>>()
     }
 
     init {
         val nets: Nets = Nets.getInstance()
-        val netsObserver = Observer<List<NetInfo>> { nets ->
-            networkList.value = nets
+        val netsObserver = Observer<List<NetInfo>> { newNetworkList ->
+            networkList.value = newNetworkList
         }
 
         nets.addStateObserver(netsObserver)
+        networkList.value = nets.networkList
     }
 
     fun getNetInfo(position: Int): NetInfo {
-        TODO("Not yet implemented")
+        return networkList.value!![position]
     }
 
     fun getNetCount(): Int {

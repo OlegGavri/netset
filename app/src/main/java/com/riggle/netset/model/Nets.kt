@@ -5,23 +5,25 @@ import android.util.Log
 import androidx.lifecycle.Observer
 
 // This class return information about networks
-class Nets {
+class Nets(private val application: NetsetApplication) {
     companion object {
         private var instance : Nets? = null
 
         fun getInstance() : Nets {
-            if(instance == null) {
-                instance = Nets()
-            }
             return instance!!
+        }
+
+        fun createInstance(application : NetsetApplication) {
+            instance = Nets(application)
         }
 
         const val TAG = "Net"
     }
 
-    private val connectivityManager = NetsetApplication.instance!!.connectivityManager
+    // It is lazy, because NetsetApplication.instance instantiated in onCreate function
+    private val connectivityManager = application.connectivityManager
 
-    private val networkList : MutableList<NetInfo> = mutableListOf()
+    val networkList : MutableList<NetInfo> = mutableListOf()
     private val observers : MutableList<Observer<List<NetInfo>>> = mutableListOf()
 
     init {
@@ -41,9 +43,6 @@ class Nets {
                 //
                 // Remove from networkList element for this network(with the same interface name)
                 //
-                val linkProperties = connectivityManager.getLinkProperties(network)
-                val interfaceName = linkProperties?.interfaceName
-
                 val netInfo = networkList.find { it.network == network }
                 networkList.remove(netInfo)
             }
@@ -57,18 +56,12 @@ class Nets {
                 //
                 // Add new element in networkList
                 //
-                val linkProperties = connectivityManager.getLinkProperties(network)
-                val interfaceName = linkProperties?.interfaceName ?: "Unknown"
-
-                val linkAddresses = linkProperties?.linkAddresses
+                val interfaceName = linkProperties.interfaceName ?: "Unknown"
+                val linkAddresses = linkProperties.linkAddresses
 
                 var ipAddresses = String()
-                if (linkAddresses != null) {
-                    for(linkAddress in linkAddresses) {
-                        ipAddresses += linkAddress.address.hostAddress
-                    }
-                } else {
-                    ipAddresses = "Unknown"
+                for(linkAddress in linkAddresses) {
+                    ipAddresses += linkAddress.address.hostAddress
                 }
 
                 val netInfo = NetInfo(network, interfaceName, ipAddresses, ipAddresses)
@@ -80,7 +73,7 @@ class Nets {
             }
         }
 
-        connectivityManager!!.registerNetworkCallback(request, networkCallback)
+        connectivityManager.registerNetworkCallback(request, networkCallback)
     }
 
     var current: NetInfo? = null
