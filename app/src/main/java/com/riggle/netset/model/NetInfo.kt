@@ -6,6 +6,6 @@ data class NetInfo(
     val network : Network,
 
     val netName : String,
-    val ipAddress : String,
-    val netMask : String) {
-}
+    val ipAddress : String
+    )
+

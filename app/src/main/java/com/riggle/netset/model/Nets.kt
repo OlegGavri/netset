@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import java.net.Inet4Address
 
 // This class return information about networks
-class Nets(private val application: NetsetApplication) {
+class Nets(application: NetsetApplication) {
     companion object {
         private var instance : Nets? = null
 
@@ -65,14 +65,15 @@ class Nets(private val application: NetsetApplication) {
                     val address = linkAddress.address
                     val prefix = linkAddress.prefixLength
                     if(address is Inet4Address) {
-                        ipAddresses += address.hostAddress + "/" + prefix + "\n"
+                        val ip = address.hostAddress
+                        ipAddresses += "$ip/$prefix\n"
                     }
                 }
 
                 // Remove ending newline
                 ipAddresses = ipAddresses.dropLast(1)
 
-                val netInfo = NetInfo(network, interfaceName, ipAddresses, ipAddresses)
+                val netInfo = NetInfo(network, interfaceName, ipAddresses)
                 networkList.add(netInfo)
 
                 for(observer in observers) {

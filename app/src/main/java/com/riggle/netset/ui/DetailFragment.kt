@@ -34,7 +34,6 @@ class DetailFragment : Fragment() {
         binding.apply {
             netName.text = netInfo.netName
             ip.text = netInfo.ipAddress
-            netmask.text = netInfo.netMask
         }
     }
 }
