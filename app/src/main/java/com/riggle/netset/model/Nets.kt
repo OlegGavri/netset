@@ -3,6 +3,7 @@ package com.riggle.netset.model
 import android.net.*
 import android.util.Log
 import androidx.lifecycle.Observer
+import java.net.Inet4Address
 
 // This class return information about networks
 class Nets(private val application: NetsetApplication) {
@@ -61,8 +62,15 @@ class Nets(private val application: NetsetApplication) {
 
                 var ipAddresses = String()
                 for(linkAddress in linkAddresses) {
-                    ipAddresses += linkAddress.address.hostAddress
+                    val address = linkAddress.address
+                    val prefix = linkAddress.prefixLength
+                    if(address is Inet4Address) {
+                        ipAddresses += address.hostAddress + "/" + prefix + "\n"
+                    }
                 }
+
+                // Remove ending newline
+                ipAddresses = ipAddresses.dropLast(1)
 
                 val netInfo = NetInfo(network, interfaceName, ipAddresses, ipAddresses)
                 networkList.add(netInfo)
