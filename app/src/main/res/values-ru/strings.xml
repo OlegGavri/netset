@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">netset</string>
+    <string name="net_name_label">Название сети:</string>
+    <string name="ip_label">IP адрес:</string>
+    <string name="netmask_label">Маска подсети:</string>
+    <string name="networks_list_title">Список сетей</string>
+    <string name="net_details_title">Информация о сети</string>
+</resources>

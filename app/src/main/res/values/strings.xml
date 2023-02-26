@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">netset</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="net_name_label">Net name:</string>
     <string name="ip_label">IP:</string>
     <string name="netmask_label">Netmask:</string>
+    <string name="networks_list_title">Networks list</string>
+    <string name="net_details_title">Net detail</string>
 </resources>
