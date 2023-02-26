@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.riggle.netset.adapters.NetworkListAdapter
 import com.riggle.netset.databinding.FragmentNetworkListBinding
 import com.riggle.netset.viewmodel.NetworkListFragmentViewModel
@@ -36,6 +37,12 @@ class NetworkListFragment : Fragment() {
         val navController = findNavController()
         val networkListAdapter = NetworkListAdapter(navController, viewModel, this)
         val networkRecycleView = binding.networksRecycleView
+        val dividerItemDecoration = DividerItemDecoration(
+            networkRecycleView.context,
+            DividerItemDecoration.VERTICAL
+        )
+
         networkRecycleView.adapter = networkListAdapter
+        networkRecycleView.addItemDecoration(dividerItemDecoration)
     }
 }
