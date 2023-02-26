@@ -14,7 +14,7 @@ class NetworkListFragmentViewModel : ViewModel() {
     init {
         val nets: Nets = Nets.getInstance()
         val netsObserver = Observer<List<NetInfo>> { newNetworkList ->
-            networkList.value = newNetworkList
+            networkList.postValue(newNetworkList)
         }
 
         nets.addStateObserver(netsObserver)

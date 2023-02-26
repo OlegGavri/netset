@@ -40,12 +40,29 @@ class Nets(application: NetsetApplication) {
             }
 
             override fun onLosing(network: Network, maxMsToLive: Int) {
+                Log.d(TAG, "Network lose: $network")
+                //
+                // Remove from networkList element for this network(with the same interface name)
+                //
+                val netInfo = networkList.find { it.network == network }
+                networkList.remove(netInfo)
+
+                for(observer in observers) {
+                    observer.onChanged(networkList)
+                }
+            }
+
+            override fun onLost(network: Network) {
                 Log.d(TAG, "Network lost: $network")
                 //
                 // Remove from networkList element for this network(with the same interface name)
                 //
                 val netInfo = networkList.find { it.network == network }
                 networkList.remove(netInfo)
+
+                for(observer in observers) {
+                    observer.onChanged(networkList)
+                }
             }
 
             override fun onLinkPropertiesChanged(network: Network, linkProperties: LinkProperties) {
@@ -74,7 +91,9 @@ class Nets(application: NetsetApplication) {
                 ipAddresses = ipAddresses.dropLast(1)
 
                 val netInfo = NetInfo(network, interfaceName, ipAddresses)
-                networkList.add(netInfo)
+
+                if(netInfo !in networkList)
+                    networkList.add(netInfo)
 
                 for(observer in observers) {
                     observer.onChanged(networkList)
