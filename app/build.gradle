@@ -4,6 +4,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        config {
+            storeFile file('/home/oleg/.android/release.keystore.jks')
+            storePassword 'FRdI2SAK'
+            keyPassword 'OB0fsekY'
+            keyAlias 'key0'
+        }
+    }
     namespace 'com.riggle.netset'
     compileSdk 33
 
@@ -25,6 +33,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     compileOptions {
